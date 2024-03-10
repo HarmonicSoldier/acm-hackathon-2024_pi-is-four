@@ -1,0 +1,1 @@
+This is a sample file by Zach Nunez to test whether GitHub is properly configured on his end (e.g. permissions, authentication, etc.). This file should be deleted in the final project, as it serves no actual purpose.
