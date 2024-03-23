@@ -1,0 +1,77 @@
+
+from cgitb import text
+from typing import Self
+from kivy.app import App
+from kivy.base import Clock
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.textinput import TextInput
+from kivy.animation import Animation
+from kivy.lang import Builder
+from kivy.properties import StringProperty
+from kivy.uix.progressbar import ProgressBar
+from kivy.clock import Clock
+from kivy.graphics import Color, Rectangle
+
+## Variables/Conditions
+
+class A_Friend_In_10_App(App):
+    def build(self):
+        bootup = BootScreen
+
+    ## Boot Screen Animation
+    class BootScreen(GridLayout):
+        def __init__(self, **kwargs):
+            super(BootScreen, self).__init__(**kwargs)
+            self.cols = 1
+            with self.canvas.before:
+                Color(1, 1, 1, 1) # White background
+                self.rect = Rectangle(size=self.size, pos=self.pos)
+
+
+            # listen to size and position changes
+            self.bind(pos=update_rect, size=update_rect)
+        
+            #Label Customizations
+            Welcome_Label = Label(text="Welcome to Find a Friend in 10", color=(1,0,0,1))
+            self.add_widget(Welcome_Label)
+    
+            self.progress_bar1 = ProgressBar(value=0,max=100)
+            self.add_widget(self.progress_bar1)
+    
+            ## Update progress function called every 0.1 seconds
+            self.progress1_event = Clock.schedule_interval(self.update_progress1, 1.0)
+    
+    
+        def update_progress1(self, dt):
+            #Increase bar
+            if self.progress_bar1.value < 100:
+               self.progress_bar1.value +=1
+            else:
+                #Stop the Clock
+                Clock.unschedule(self.progress1_event)
+
+        def update_rect(self, value):
+            self.rect.pos = self.pos
+            self.rect.size = self.size
+            
+class A_Friend_In_10_App(App):
+    def build(self):
+        bootup = BootScreen
+if __name__=='__main__':
+    app = A_Friend_in_10_App()
+    app.run()
+
+## Username or Returning User Prompt
+
+## Logged in Screen with options Return To Chat or Answer 10 questions
+    ##Return to Chat
+        ##If not chat has been done it shows a blank inbox
+        ## If chat has been done it shows a previous chat
+    ##Anser 10 Questions
+        ##Generates first question
+
+## At end of questions generates preparing matches loading screen
+## Congradulations animation screen with options to start chat with matched user or answer another 10 questions
