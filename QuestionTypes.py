@@ -59,12 +59,12 @@ class Scale(Question):
 
 
     def compareAnswers(ans1, ans2):
-    """ records similarity between asnwers.
+    """ records similarity between asnwers. """
 
     Keyword arguments:
     ans1 - integer from -2 (strongly disagree) to 2 (strongly agree)
     ans2 - integer from -2 (strongly disagree) to 2 (strongly agree)
-    """
+
       if (ans1 * ans2 > 0):
         bias=ALIGNMENT_BIAS
       else:
