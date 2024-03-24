@@ -10,13 +10,13 @@ def display_questionaire():
     question_lines = []
 
     """
-    Reads questions from the "Demo.txt" file and save them to questionList
+    Reads questions from the "QuestionList.txt" file and save them to questionList
     """
     # Get the current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Construct the file path
-    file_path = os.path.join(current_dir, "Demo.txt")
+    file_path = os.path.join(current_dir, "Demo.txt")   #for now read from Demo.txt
 
     # Read only question lines
     with open(file_path, "r") as file:
@@ -54,18 +54,7 @@ def display_questionaire():
     print(user1_answers)#module test
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+# NOT FINISHED
     # Function to handle
      
     # Create a temporary window to get screen dimensions
