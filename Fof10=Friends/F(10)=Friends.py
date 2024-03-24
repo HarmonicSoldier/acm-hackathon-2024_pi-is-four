@@ -119,8 +119,13 @@ questions = [
     Question("If you were gearing up for a zombie apocalypse and could only choose one resource to have in abundance, what would you go for?",
              ["Food/Water", "Weapons", "Pets", "Books"]),
     Question("What is your favorite season?", ["Spring", "Summer", "Fall", "Winter"]),
-    Question("What is your ideal dream home?",["Million-dollar penthouse","Modern Tropical Mansion","United Kingdom stately home","Winter Hunting Cabin"])
-   
+    Question("What is your ideal dream home?",["Million-dollar penthouse","Modern Tropical Mansion","United Kingdom stately home","Winter Hunting Cabin"]),
+    Question("What is your top vacation plan?", ["Climb Mt. Everest", "Visit the pyramids of Giza", "Visit an amusement park", "Vist a great beach")),
+    Question("What is your favorite TV-show-genre?", ["Comedy", "Action/Adventure", "Drama", "Documentary"]),
+    Question("What is the best way to spend a lazy Sunday afternoon", ["Reading a book", "Binge watching a TV show", "Cooking/baking", "Nap time!"]),
+    Question("If you could visit any fictional world, where would you go?", ["Hogwarts", "Middle Earth", "Star Wars", "Star Trek"]),
+    Question("If you could explore the world using only one mode of transport for the rest of your life, which would you choose?", ["Land - traversing continents by road, rail, or foot", "Sea - sailing the oceans aboard a ship or yacht", "Air - soaring through the skies in a plane or hot air balloon", "Underwater - diving into the depths to discover the myseries of the sea"]),
+    Question("If you could instantly become fluent in one language other than your native tongue, which would you choose?", ["Spanish", "Japenese", "French", "Mandarin Chinese"])             
 ]
 
 class QuestionnaireScreen(Screen):
