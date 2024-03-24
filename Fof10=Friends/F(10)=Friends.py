@@ -131,7 +131,7 @@ questions = [
 class QuestionnaireScreen(Screen):
     def __init__(self, **kwargs):
         super(QuestionnaireScreen, self).__init__(**kwargs)
-        self.questions = questions  # Assuming 'questions' is a list of Question objects
+        self.questions = questions  # list of Question objects
         self.current_question_index = 0
         self.answers = []
         self.display_question()
@@ -159,10 +159,11 @@ class QuestionnaireScreen(Screen):
         self.display_question()
 
     def finish_questionnaire(self):
-        # Handle the end of the questionnaire
+        #end of the questionnaire
         print("Questionnaire completed. Answers:", self.answers)
-        # switch to match loading screen
-
+        self.manager.current = 'matching'
+       
+        
 class MatchingBootScreen(Screen):
     def __init__(self, **kwargs):
         super(MatchingBootScreen, self).__init__(**kwargs)
@@ -185,235 +186,73 @@ def update_progress2(self, dt):
     else:
         Clock.unschedule(self.progress2_event)
         self.manager.current = 'match'
+       
+class Name:
+    def __init__(self, full_name):
+        self.full_name = full_name
+
+names = [
+    Name("Tom Bombadil"),
+    Name("Gordon Freeman"),
+    Name("Tirion Fordring"),
+    Name("Jon Snow"),
+    Name("Stephen Hawking"),
+    Name("Aragorn Son of Arathorn"),
+    Name("Sylvanas Windrunner"),
+    Name("Carl Sagan")
+]
+
+def get_random_names(num_names=3):
+    num_names = min(num_names, len(names))
+    return random.sample(names, num_names)
+
+class OptionsPopup(Popup):
+    def __init__(self, match_name, screen_manager, **kwargs):
+        super(OptionsPopup, self).__init__(**kwargs)
+        self.screen_manager = screen_manager
+        self.match_name = match_name
         
-# # Set up the screen manager
-# class MyApplication(App):
-#     def build(self):
-#         sm = ScreenManager()
-#         sm.add_widget(LoggedInScreen(name='loggedin'))
-#         sm.add_widget(QuestionnaireScreen(name='questionnaire'))
-#         return sm
 
+    def open_chat(self, instance):
+        # Logic to open chat with match_name
+        print(f"Opening chat with {self.match_name}")
+        # Switch to chat screen if it exists
+        self.screen_manager.current = 'chat_screen_name'
+        self.dismiss()
 
-#         ##Generates first question
-#     # last Question:
-#     # def __init__(self, prompt, answer):
-#     #     self.prompt = prompt
-#     #     self.answer = answer
+    def block_user(self, instance):
+        # Logic to block the user
+        print(f"Blocking {self.match_name}")
+        # Perform blocking operation (no screen switch needed here)
+        self.dismiss()
+        
+class MatchHubScreen(Screen):
+    def __init__(self, **kwargs):
+        super(MatchHubScreen, self).__init__(**kwargs)
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        
+        #Label
+        self.match_list_label = Label(text="Your Matches:")
+        layout.add_widget(self.match_list_label)
 
-# def read_questions():
-#     question_lines = []
-#     current_dir = os.path.dirname(os.path.abspath(__file__))
-#     file_path = os.path.join(current_dir, "Demo.txt")
-
-#     with open(file_path, "r") as file:
-#         for line in file:
-#             if line.strip().startswith(('1.', '2.', '3.')):
-#                 question_lines.append(line.strip())
-#     return question_lines
-
-# class QuestionnaireScreen(BoxLayout):
-#     def __init__(self, **kwargs):
-#         super(QuestionnaireScreen, self).__init__(**kwargs)
-#         self.orientation = 'vertical'
-#         self.padding = [10, 10, 10, 10]
-#         self.spacing = 10
-
-#         self.questions = [Question(q, None) for q in read_questions()]
-#         self.current_question_index = 0
-#         self.answers = []
-
-#         # Question Label
-#         self.question_label = Label(text=self.questions[0].prompt, size_hint_y=None, height=60)
-#         self.add_widget(self.question_label)
-
-#         # Answer Input
-#         self.answer_input = TextInput(multiline=False, size_hint_y=None, height=40)
-#         self.add_widget(self.answer_input)
-
-#         # Next Question Button
-#         self.next_button = Button(text='Next Question', size_hint_y=None, height=50)
-#         self.next_button.bind(on_press=self.record_answer)
-#         self.add_widget(self.next_button)
-
-
-#     def record_answer(self, instance):
-#         answer = self.answer_input.text.lower().strip()
-#         if answer in ["a", "b", "c", "d"]:
-#             self.answers.append(answer)
-#             self.next_question()
-#         else:
-#             self.question_label.text = "Invalid input. Please enter a, b, c, d\n\n" + self.question_label.text
-
-#     def next_question(self):
-#         self.current_question_index += 1
-#         if self.current_question_index < len(self.questions):
-#             self.question_label.text = self.questions[self.current_question_index].prompt
-#             self.answer_input.text = ''
-#         else:
-#             self.question_label.text = "Questionnaire completed."
-#             self.answer_input.disabled = True
-#             self.next_button.disabled = True
-#             print(self.answers)  # Handle the answers as needed
+        random_names = get_random_names(3)
+        for name_obj in random_names:
+            btn = Button(text=name_obj.full_name)
+            btn.bind(on_press=self.open_options)
+            layout.add_widget(btn)
             
-# ## Matchhub
-# def get_random_names(num_names=3):
-#     current_dir = os.path.dirname(os.path.abspath(__file__))
-#     file_path = os.path.join(current_dir, "FriendNames.txt")
-#     with open(file_path, "r") as file:
-#         names = [name.strip() for name in file.readlines()]
-#     return random.sample(names, num_names)
-
-# class MatchHubScreen(BoxLayout):
-#     def __init__(self, **kwargs):
-#         super().__init__(orientation='vertical', **kwargs)
-
-#         self.matches = get_random_names()
-
-#         self.match_list_label = Label(text="Your Matches:", size_hint_y=0.1)
-#         self.add_widget(self.match_list_label)
-
-#         self.match_list = ListView(item_strings=self.matches, size_hint_y=0.7)
-#         self.add_widget(self.match_list)
-
-#         self.answer_questions_button = Button(text="Answer More Questions", on_press=self.answer_questions, size_hint_y=0.1)
-#         self.add_widget(self.answer_questions_button)
-
-#         self.block_button = Button(text="Block", on_press=self.block_user, size_hint_y=0.1)
-#         self.add_widget(self.block_button)
-
-#         self.credit_label = Label(text="Created by Π=4", size_hint_y=0.1)
-#         self.add_widget(self.credit_label)
-
-#     def answer_questions(self, instance):
-#         print("Answering more questions...")
-
-#     def block_user(self, instance):
-#         selected_match = self.match_list.adapter.selection[0].text if self.match_list.adapter.selection else None
-#         if selected_match:
-#             # Confirmation popup
-#             content = ConfirmPopup()
-#             self.popup = Popup(title="Confirmation", content=content, size_hint=(0.5, 0.5))
-#             content.ids.yes.bind(on_press=lambda x: self.remove_match(selected_match))
-#             content.ids.no.bind(on_press=self.popup.dismiss)
-#             self.popup.open()
-
-#     def remove_match(self, match_name):
-#         if match_name in self.matches:
-#             self.matches.remove(match_name)
-#             self.match_list.item_strings = self.matches
-#             self.popup.dismiss()
-
-#     def open_chat(self, instance):
-#         selected_match = instance.text
-#         chat_bot(selected_match)
-
-# class ConfirmPopup(FloatLayout):
-#     pass
-
-# class MatchHubApp(App):
-#     def build(self):
-#         return MatchHubScreen()            
-# ## At end of questions generates preparing matches loading screen
-# class MatchLoadingScreen(BoxLayout):
-#     def __init__(self, **kwargs):
-#         super().__init__(orientation='vertical', padding=10, spacing=10, **kwargs)
-
-#         self.loading_label = Label(text="Loading Matches...", size_hint=(1, 0.2))
-#         self.add_widget(self.loading_label)
-
-#         self.progress_bar = ProgressBar(max=100, size_hint=(1, 0.2))
-#         self.add_widget(self.progress_bar)
-
-#         self.go_to_matches_button = Button(text="Go To Matches", size_hint=(1, 0.2), disabled=True)
-#         self.go_to_matches_button.bind(on_press=self.go_to_matches)
-#         self.add_widget(self.go_to_matches_button)
-
-#         self.progress = 0
-#         Clock.schedule_interval(self.load_matches, 0.1)
-
-#     def load_matches(self, dt):
-#         self.progress += 5
-#         if self.progress > 100:
-#             self.progress = 100
-#             Clock.unschedule(self.load_matches)
-#             self.loading_label.text = "Matches loaded successfully!"
-#             self.go_to_matches_button.disabled = False
-#         self.progress_bar.value = self.progress
-
-#     def go_to_matches(self, instance):
-#         self.clear_widgets()
-#         # Add the MatchHub screen here
-#         # Ensure MatchHub is properly converted to work with Kivy
-#         self.add_widget(Label(text="Match Hub Screen"))  # Placeholder for MatchHub
-
-# ## Congradulations animation screen with options to start chat with matched user or answer another 10 questions
-    
-# ## Chatbot
-# class ChatBotScreen(BoxLayout):
-#     def __init__(self, bot_name, **kwargs):
-#         super().__init__(orientation='vertical', **kwargs)
-#         self.bot_name = bot_name
-#         self.conversation_history = {}
-
-#         self.conversation_area = TextInput(readonly=True, size_hint_y=0.8)
-#         self.add_widget(self.conversation_area)
-
-#         self.entry = TextInput(size_hint_y=0.1, multiline=False)
-#         self.entry.bind(on_text_validate=self.bot_respond)
-#         self.add_widget(self.entry)
-
-#         self.send_button = Button(text="Send", size_hint_y=0.1)
-#         self.send_button.bind(on_press=self.bot_respond)
-#         self.add_widget(self.send_button)
-
-#     def bot_respond(self, instance):
-#         user_input = self.entry.text.lower().strip()
-#         if user_input:
-#             self.conversation_area.text += f"You: {user_input}\n"
-#             response = self.generate_response(user_input)
-#             self.conversation_area.text += f"{self.bot_name}: {response}\n"
-#             self.conversation_history.setdefault(user_input, []).append(response)
-#             self.entry.text = ''
-    
-# ## Send friend Request to matches
-# class ConfirmPopup(FloatLayout):
-#     pass
-
-# class AddFriendWindow(BoxLayout):
-#     def __init__(self, friend_name, **kwargs):
-#         super().__init__(orientation='vertical', **kwargs)
-#         self.friend_name = friend_name
-
-#         self.label = Label(text=f"Options for {self.friend_name}", font_size='20sp')
-#         self.add_widget(self.label)
-
-#         self.send_button = Button(text="Send Friend Request", on_release=self.send_friend_request)
-#         self.add_widget(self.send_button)
-
-#         self.block_button = Button(text="Block", on_release=self.confirm_block_user)
-#         self.add_widget(self.block_button)
-
-#     def send_friend_request(self, instance):
-#         self.label.text = "Friend Request Sent"
-#         self.send_button.disabled = True
-
-#     def confirm_block_user(self, instance):
-#         content = ConfirmPopup()
-#         self.popup = Popup(title="Confirmation", content=content, size_hint=(0.5, 0.5))
-#         content.ids.yes.bind(on_release=self.block_user)
-#         content.ids.no.bind(on_release=self.popup.dismiss)
-#         self.popup.open()
-
-#     def block_user(self, instance):
-#         self.label.text = "User Blocked"
-#         self.block_button.disabled = True
-#         self.popup.dismiss()
+        self.add_widget(layout)
+    def open_options(self, instance):
+        selected_match = instance.text
+        options_popup = OptionsPopup(selected_match, self.manager)
+        options_popup.open()
         
-
-# class A_Friend_In_10_App(App):
-#     def build(self):
-#         bootup = BootScreen
-# if __name__=='__main__':
-#     app = A_Friend_in_10_App()
-#     app.run()
+ class A_Friend_In_10_App(App):
+    def build(self):
+        sm = ScreenManager()
+        sm.add_widget(BootScreen(name='boot'))
+        sm.add_widget(UserScreen(name='user'))
+        sm.add_widget(MainScreen(name='main'))
+        sm.add_widget(QuestionnaireScreen(name='questionnaire'))
+        sm.add_widget(MatchingBootScreen(name='matching'))
+        sm.add_widget(MatchHubScreen(name='matchhub'))  
