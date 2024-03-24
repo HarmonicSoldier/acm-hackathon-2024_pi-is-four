@@ -40,7 +40,7 @@ def display_names():
 
     # Create a label to display the names
     label = tk.Label(window, text="\n".join(names),
-                     font=("Arial", 16), fg="green", bg="black")  # Set text color to green
+                 font=("Arial", 16), fg="green", bg="black")  # Set text color to green
     label.pack(padx=20, pady=20)
 
     # Entry widget to enter new name
