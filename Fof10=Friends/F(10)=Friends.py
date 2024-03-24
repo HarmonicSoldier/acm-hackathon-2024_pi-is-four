@@ -163,18 +163,28 @@ class QuestionnaireScreen(Screen):
         print("Questionnaire completed. Answers:", self.answers)
         # switch to match loading screen
 
-# class QuestionnaireScreen(Screen):
-#     def __init__(self, **kwargs):
-#         super(QuestionnaireScreen, self).__init__(**kwargs)
-#         # define questions function/if we want to hardcode them in
-#         layout = BoxLayout(orientation='vertical')
-#         back_button = Button(text='Back to Main Screen')
-#         back_button.bind(on_press=self.go_back)
-#         layout.add_widget(back_button)
-#         self.add_widget(layout)
+class MatchingBootScreen(Screen):
+    def __init__(self, **kwargs):
+        super(MatchingBootScreen, self).__init__(**kwargs)
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        
+        # Matching Label
+        Matching_Label = Label(text="Loading your matches!", size_hint_y=None, height=40, color=(1, 0, 0, 1))
+        self.add_widget(Matching_Label)
+        
+        # Initialize and add ProgressBar
+        self.progress_bar2 = ProgressBar(value=0, max=100)
+        self.add_widget(self.progress_bar2)
 
-#     def go_back(self, instance):
-#         self.manager.current = 'main'
+        # Update progress bar
+        self.progress2_event = Clock.schedule_interval(self.update_progress2, 0.05)
+
+def update_progress2(self, dt):
+    if self.progress_bar2.value < 100:
+        self.progress_bar2.value += 1
+    else:
+        Clock.unschedule(self.progress2_event)
+        self.manager.current = 'match'
         
 # # Set up the screen manager
 # class MyApplication(App):
