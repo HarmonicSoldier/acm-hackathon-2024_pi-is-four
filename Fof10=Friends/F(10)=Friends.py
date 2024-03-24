@@ -120,7 +120,7 @@ questions = [
              ["Food/Water", "Weapons", "Pets", "Books"]),
     Question("What is your favorite season?", ["Spring", "Summer", "Fall", "Winter"]),
     Question("What is your ideal dream home?",["Million-dollar penthouse","Modern Tropical Mansion","United Kingdom stately home","Winter Hunting Cabin"]),
-    Question("What is your top vacation plan?", ["Climb Mt. Everest", "Visit the pyramids of Giza", "Visit an amusement park", "Vist a great beach")),
+    Question("What is your top vacation plan?", ["Climb Mt. Everest", "Visit the pyramids of Giza", "Visit an amusement park", "Vist a great beach"]),
     Question("What is your favorite TV-show-genre?", ["Comedy", "Action/Adventure", "Drama", "Documentary"]),
     Question("What is the best way to spend a lazy Sunday afternoon", ["Reading a book", "Binge watching a TV show", "Cooking/baking", "Nap time!"]),
     Question("If you could visit any fictional world, where would you go?", ["Hogwarts", "Middle Earth", "Star Wars", "Star Trek"]),
